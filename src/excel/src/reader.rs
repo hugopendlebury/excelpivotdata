@@ -13,9 +13,9 @@ use tokio::fs::{create_dir_all, File, OpenOptions};
 
 use super::errors::*;
 
-pub (crate) type XlsReader<'a> = XmlReader<BufReader<ZipFile<'a>>>;
+pub(crate) type XlsReader<'a> = XmlReader<BufReader<ZipFile<'a>>>;
 
-/* 
+/*
 pub (crate) type XlsReader2<'a> = XmlReader<BufReader<ZipFileReader<dyn Read>>>;
 
 
@@ -24,7 +24,7 @@ pub async fn xml_reader2<'a, RS: Read + Seek>(
     zip: &mut ZipFile,
     path: &str,
 ) -> Option<Result<XlsReader<'a>, XlsxError>> {
-    let mut reader = 
+    let mut reader =
     match zip.by_name(path) {
         Ok(f) => {
             let mut r = XmlReader::from_reader(BufReader::new(f));
@@ -57,15 +57,13 @@ pub fn xml_reader<'a, RS: Read + Seek>(
     }
 }
 
-
 pub trait Reader<RS>: Sized
 where
-RS: Read + Seek,
+    RS: Read + Seek,
 {
-/// Error specific to file type
-type Error: std::fmt::Debug + From<std::io::Error>;
+    /// Error specific to file type
+    type Error: std::fmt::Debug + From<std::io::Error>;
 
-/// Creates a new instance.
-fn new(reader: RS) -> Result<Self, Self::Error>;
-
+    /// Creates a new instance.
+    fn new(reader: RS) -> Result<Self, Self::Error>;
 }

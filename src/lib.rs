@@ -22,7 +22,7 @@ fn get_pivot_data(py: Python, file_path: String) -> PyResult<&PyAny> {
     
         let mut pivot: PivotTable<_> = open_pivottable(&file_path).unwrap();
         let x = pivot.row_data.iter().enumerate().map(|(i, d)| {
-            Series::new(pivot.cache_definitions[i].cacheDefintionName.as_str(), d)
+            Series::new(pivot.cache_definitions[i].cache_defintion_name.as_str(), d)
         }).collect();
 
         let df = DataFrame::new(x).unwrap();
